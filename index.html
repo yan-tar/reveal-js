@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -16,8 +16,360 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h1>Navigating Sticky Columns and Custom Properties</h1>
+					<aside class="notes">
+						<p>As many of you know, responsive tables can be a big pain, especially on mobiles. But sometimes, even on big screens, tables can become a problem. Sticky columns can be the solution you're trying to find.</p>
+					</aside>
+				</section>
+				<section>
+					<h2>Tables or grid?</h2>
+					<div class="fragment">TODO: add example of the Chromium bug</div>
+
+					<aside class="notes">
+						<p>So, when I get a new task to make a layout with sticky columns, I have two ways in front of me: make it semantic and accessible, and robust with tables, or try something new and maybe more flexible with CSS grid.</p>
+						<p>Some years ago, I already had some not-so-happy experiences with tables. So, this time, I decided to give CSS grid a shot. Plus, I knew we needed this component for internal use, specifically within our admin section, so semantics and accessibility aren't as crucial.</p>
+						<p>Another reason to opt for CSS grid is a pesky Chromium bug messing with borders on tables with sticky columns.</p>
+						<p>But the CSS I'll use in my examples plays nice with tables as well.</p>
+					</aside>
+
+				</section>
+
+				<section>
+					<h2>1. Basic layout</h2>
+					<div class="grid">
+						<div></div>
+						<div>01.03</div>
+						<div>02.03</div>
+						<div>03.03</div>
+						<div>04.03</div>
+						<div>05.03</div>
+						<div>06.03</div>
+						<div>07.03</div>
+						<div>08.03</div>
+						<div>09.03</div>
+						<div>10.03</div>
+						<div>11.03</div>
+						<div>12.03</div>
+						<div>13.03</div>
+						<div>14.03</div>
+						<div>15.03</div>
+						<div>16.03</div>
+						<div>17.03</div>
+						<div>18.03</div>
+						<div>19.03</div>
+						<div>20.03</div>
+						<div>John Doe</div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div>Mary Sue</div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
+					<aside class="notes"><p>So let's start with a  basic layout.  First up, I don't know how many columns will be in the table, so let's handle that with CSS custom properties.</p></aside>
+				</section>
+				<section>CSS
+					<pre><code data-trim>
+						.grid {
+							display: grid;
+							grid-template-columns: repeat(var(--columns), minmax(80px, 1fr));
+							max-width: 100%;
+							overflow-x: scroll;
+						}
+					</code></pre>
+					HTML
+					<pre><code data-trim>
+						<section class="grid" style="--columns: 21;">
+							<div>Name</div>
+							<div>01.03</div>
+							<div>02.03</div>
+							<div>03.03</div>
+							<div>04.03</div>
+							<div>05.03</div>
+							<div>06.03</div>
+							<div>07.03</div>
+							<div>08.03</div>
+							<div>09.03</div>
+							<div>10.03</div>...
+							<!-- HERE starts the new row -->
+							<div>John Doe</div>
+							<div></div>...
+						</section>
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Part II. Add some stickyness</h2>
+					<p>TODO: find some bubble gum image</p>
+					<aside class="notes">
+						<p>If you only need to make the first or last column sticky, that's a straightforward task.</p>
+					</aside>
+				</section>
+				<section data-auto-animate>
+					<h3 data-id="heading-animation1">Sticky first or last column</h3>
+					<pre data-id="code-animation1"><code data-trim data-line-numbers>
+						.grid {
+							display: grid;
+							grid-template-columns:
+								repeat(var(--columns), minmax(80px, 1fr));
+							max-width: 100%;
+							overflow-x: scroll;
+						}
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h3  data-id="heading-animation1">Sticky first or last column</h3>
+					<pre data-id="code-animation1"><code data-trim data-line-numbers="9-17" style="max-height: 500px">
+						.grid {
+							display: grid;
+							grid-template-columns:
+								repeat(var(--columns), minmax(80px, 1fr));
+							max-width: 100%;
+							overflow-x: scroll;
+						}
+
+						.fixed-first {
+							position: sticky;
+							left: 0;
+						}
+
+						.fixed-last {
+							position: sticky;
+							right: 0;
+						}
+					</code></pre>
+					<aside class="notes">If you're using grid, you'll need some classes to flag the sticky cells.  With tables, nth selectors got your covered.</aside>
+				</section>
+				<section data-auto-animate>
+					<h3  data-id="heading-animation1">Sticky first or last column</h3>
+					<pre data-id="code-animation1"><code data-trim data-line-numbers="9" style="max-height: 500px">
+						.grid {
+							display: grid;
+							grid-template-columns:
+								repeat(var(--columns), minmax(80px, 1fr));
+							max-width: 100%;
+							overflow-x: scroll;
+						}
+
+						.fixed-first, td:first-child {
+							position: sticky;
+							left: 0;
+						}
+					</code></pre>
+					<aside class="notes">To mimic rows within a grid, you can go for subgrid or throw in a wrapper with 'display: contents'. Just a heads up, though – these options aren't fully supported in modern browsers.</aside>
+				</section>
+
+				<section data-auto-animate>
+					<h3  data-id="heading-animation1">Sticky first or last column</h3>
+					<pre data-id="code-animation1"><code data-trim  data-ln-start-from="9" data-line-numbers="1-6">
+						/* subgrid is not supported in Safari < 17 */
+						.subgrid {
+							display: grid;
+							grid-template-columns: subgrid;
+							grid-column: 1 / -1;
+						}
+
+						.fixed-first, .subgrid div:first-child {
+							position: sticky;
+							left: 0;
+						}
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h3  data-id="heading-animation1">Sticky first or last column</h3>
+					<pre data-id="code-animation1"><code data-trim data-line-numbers="1-4" data-ln-start-from="9" style="max-height: 500px">
+						/* display: contents has only partial support in most of the modern browsers */
+						.contents {
+							display: contents;
+						}
+
+						.fixed-first, .contents div:first-child {
+							position: sticky;
+							left: 0;
+						}
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h3 data-id="heading-animation1">Sticky first or last column</h3>
+					<include src="html/basic-table.html"/>
+					<aside class="notes">Here is what we have as a start, now let's get to the fun part.</aside>
+				</section>
+				<section>
+					<h2>Part III. Add more stickiness</h2>
+					<p>TODO: another image</p>
+					<aside class="notes">
+						<p>What if we need to stick more then one column on the side? Unfortunately it's the point where we need to define columns width.</p>
+					</aside>
+				</section>
+				<section>
+				<h3>More sticky columns</h3>
+					HTML
+					<pre><code data-trim data-line-numbers="1, 10-12" style="max-height: 500px">
+						<div
+						style="--cols-width: 5em; --columns: 21;"
+						class="grid">
+							<div class="fixed-first">Name</div>
+							<div>01.03</div>
+							<div>02.03</div>
+							<div>03.03</div>
+							<div>04.03</div>
+							<div>05.03</div>
+							<div>06.03</div>
+							<div>07.03</div>...
+							<div class="fixed-last" style="--last: 2">1st sticky</div>
+							<div class="fixed-last" style="--last: 1">2nd sticky</div>
+							<div class="fixed-last">3rd sticky</div>
+						</div>
+					</code></pre>
+					<aside class="notes">
+						<p>So I needed to make 3 sticky columns at the end of the row. Let's add some more CSS custom properties.</p>
+					</aside>
+				</section>
+				<section class="part2">
+					<section>
+						<h3>More sticky columns</h3>
+						CSS
+						<pre><code data-trim data-line-numbers style="max-height: 500px">
+							.fixed-last {
+								position: sticky;
+								right: calc(var(--last, 0) * var(--cols-width));
+								width: var(--cols-width);
+							}
+						</code></pre>
+						<include src="html/table-3-last-columns.html"/>
+						<aside class="notes">Now, when we have column width and the specific column number, it's quite easy to calculate the position of each fixed cell. While you could go for tables with rows or subgrids emulating rows, using nth selectors instead of classes is still a possibility. But classes and custom properties provide more elegant solution from my point of view.</aside>
+					</section>
+					<section>
+						TODO: how to debug custom properties.
+					</section>
+				</section>
+				<section>
+					HTML
+					<pre><code data-trim data-line-numbers style="max-height: 500px">
+						<div style="--cols-width: 3em;--columns: 21;" class="grid">
+							<div class="fixed-first">Name</div>
+							<div class="fixed-first" style="--first: 1;">01.03</div>
+							<div class="fixed-first" style="--first: 2;">02.03</div>...
+						</div>
+					</code></pre>
+					CSS
+					<pre><code data-trim>
+						.fixed-first {
+							position: sticky;
+							left: calc(var(--first, 0) * var(--cols-width));
+							background-color: aliceblue;
+						}
+					</code></pre>
+					<include src="html/table-3-first-columns.html"/>
+					<aside class="notes">The most fun part waiting for us when we want to make one sticky column wider then the rest.  As an example, I'll make the three left columns sticky, with the first one being longer.  Let's start on what we've already set up for the columns on the opposite side.</aside>
+				</section>
+				<section>
+					<h3>Different width for the first column</h3>
+					<code>--first-col: 5em;</code>
+					<ul>
+						<li class="fragment"><code>--first: 0 { left: 0; }</code></li>
+						<li class="fragment"><code>--first: 1 { left: 0 + 5em; }</code></li>
+						<li class="fragment"><code>--first: 2 { left: 0 + 5em + 3em }</code></li>
+						<li class="fragment"><code>--first: 3 { left: 0 + 5em + 3em * 2 }</code></li>
+					</ul>
+					<aside class="notes">
+						Now let's add new css custom property --first-col: 5em; and solve positioning.
+					</aside>
+				</section>
+				<section>
+					<h3>Difference in formula for the first and next columns</h3>
+					<ul>
+						<li><code>5em * 0 + (var(--first) - 0) * 3em</code></li>
+						<li class="fragment"><code>5em * 1 + (var(--first) - 1) * 3em</code></li>
+					</ul>
+					<aside class="notes">
+						We can tweak it using this formula. So basically we need something like boolean variable. It would be cool if css custom property supported a boolean type, but until that happens, let's experiment with this formula.
+					</aside>
+				</section>
+				<section>
+					<section>
+						<h3>Make a boolean out of a variable</h3>
+						<pre><code data-trim class="css">--_is-not-first: calc(var(--first) / max(1, var(--first)));</code></pre>
+						<aside class="notes">Here' we're dividing the variable by itself, but if it's equal zero we're dividing it on 1.</aside>
+					</section>
+					<section>
+						<h3>Pseudo private variables</h3>
+						<code>--_var</code>
+						<p>TODO: add a picture.</p>
+						<aside class="notes">BTW I'm using here underscore notation to introduce a "private" css property - as Lea Verou proposed in her CSS variable secrets video.</aside>
+					</section>
+				</section>
+				<section>
+					Let's add it to the code
+					<pre><code data-trim class="css">
+						.grid {
+							--first: 0;
+							grid-template-columns:
+								var(--first-col)
+								repeat(calc(var(--columns) - 1), var(--cols-width));
+						}
+						.fixed-first {
+							--_is-not-first: calc(var(--first) / max(1, var(--first)));
+							left: calc(var(--first-col) * var(--_is-not-first) + (var(--first) - var(--_is-not-first)) * var(--cols-width));
+						}
+					</code></pre>
+					<aside class="notes">NB: it's important to use our new variable inside .fixed-first class.</aside>
+				</section>
+				<section>
+					TODO: finished table example
+				</section>
+				<section>
+					<h2>Part III. Improvements</h2>
+					TODO: add even funnier picture
+				</section>
+				<section>
+					<h3>Striped rows</h3>
+					TODO
+				</section>
+				<section>
+					<section>
+					<h3>Hover on rows</h3>
+					TODO</section>
+					<section>TODO: add Kout's css</section>
+				</section>
+				<section><h3>Semantics</h3>
+				TODO</section>
 			</div>
 		</div>
 
@@ -26,14 +378,26 @@
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
 		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+			function loadIncludes() {
+				return Promise.all(
+				[...document.querySelectorAll("include")].map((include) => {
+					return fetch(include.getAttribute("src"))
+					.then((response) => response.text())
+					.then((html) => (include.outerHTML = html))
+					.catch(console.err);
+				})
+				);
+			}
+			loadIncludes().then(() => {
+				// More info about initialization & config:
+				// - https://revealjs.com/initialization/
+				// - https://revealjs.com/config/
+				Reveal.initialize({
+					hash: true,
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+					// Learn about plugins: https://revealjs.com/plugins/
+					plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				});
 			});
 		</script>
 	</body>

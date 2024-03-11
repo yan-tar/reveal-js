@@ -329,3 +329,48 @@
         background-color: var(--r-background-color);
     }
 }
+
+/*********************************************
+* sticky columns
+*********************************************/
+.reveal h3 {
+	text-transform: none;
+}
+.grid {
+	--r-main-font-size: 25px;
+    --border-color: #000;
+    display: grid;
+    grid-template-columns: repeat(21, minmax(3em, 1fr));
+    overflow-x: scroll;
+	max-width: 100%;
+
+    div {
+        border: 1px solid var(--border-color);
+		background-color: var(--r-background-color);
+    }
+
+	.fixed-first {
+		position: sticky;
+		left: 0;
+		background-color: aliceblue;
+	}
+
+	.fixed-last {
+		position: sticky;
+		right: 0;
+		background-color: aliceblue;
+	}
+}
+
+.part2,
+.part2 ~ section {
+	.fixed-last {
+		right: calc(var(--last, 0) * var(--cols-width));
+		width: var(--cols-width);
+	}
+
+	.fixed-first {
+		left: calc(var(--first, 0) * var(--cols-width));
+		width: var(--cols-width);
+	}
+}
