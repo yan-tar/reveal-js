@@ -233,7 +233,7 @@
 					HTML
 					<pre><code data-trim data-line-numbers="1-4" style="max-height: 500px" class="language-html">
 						<div
-						style="--cols-width: 5em; --columns: 21;"
+						style="--cols-width: 3em; --columns: 21;"
 						class="grid">
 							<div class="fixed-first">Name</div>
 							<div class="fixed-first" style="--first: 1">1st sticky</div>
@@ -307,14 +307,14 @@
 					<h3>Different width for the first column</h3>
 					<code>--first-col: 5em;</code>
 					<ul>
-						<li class="fragment"><code>--first: 0 { left: 0; }</code></li>
-						<li class="fragment"><code>--first: 1 { left: 0 + 5em; }</code></li>
-						<li class="fragment"><code>--first: 2 { left: 0 + 5em + 3em }</code></li>
-						<li class="fragment"><code>--first: 3 { left: 0 + 5em + 3em * 2 }</code></li>
+						<li class="fragment">--first: 0 <code>{ left: 0; }</code></li>
+						<li class="fragment">--first: 1 <code>{ left: 0 + 5em; }</code></li>
+						<li class="fragment">--first: 2 <code>{ left: 0 + 5em + 3em }</code></li>
+						<li class="fragment">--first: 3 <code>{ left: 0 + 5em + 3em * 2 }</code></li>
 					</ul>
 					<aside class="notes">
 						Now let's add new css custom property --first-col: 5em; and solve positioning.
-						The first column should have position left equal zero.
+						<strong>The first column should have position left equal zero.</strong>
 					</aside>
 				</section>
 				<section>
@@ -388,8 +388,8 @@
 						<aside class="notes">Again - it's easy to make hover effect on rows if you have it, but how to make it without rows?</aside>
 					</section>
 					<section>
-						<h3>Hover on a row - highlight the first cell</h3>
-						<pre><code data-trim class="css language-css">
+						<h3>Hover on a row &ndash; highlight the first cell</h3>
+						<pre><code data-line-numbers="6" data-trim class="css language-css">
 							// Uses .fixed-last as a separator at the end of the table row.
 							// In plain words:
 							// 1. select .fixed-first followed by div:hover
