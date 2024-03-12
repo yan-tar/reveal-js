@@ -17,7 +17,7 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h1>Navigating Sticky Columns and Custom Properties</h1>
+					<h1><span>Navigating</span> Sticky&nbsp;Columns <small>and</small> Custom&nbsp;Properties</h1>
 					<aside class="notes">
 						<p>As many of you know, responsive tables can be a big pain, especially on mobiles. But sometimes, even on big screens, tables can become a problem. Sticky columns can be the solution you're trying to find.</p>
 					</aside>
@@ -143,18 +143,6 @@
 				</section>
 				<section data-auto-animate>
 					<h3 data-id="heading-animation1">Sticky first or last column</h3>
-					<pre data-id="code-animation1"><code data-trim data-line-numbers>
-						.grid {
-							display: grid;
-							grid-template-columns:
-								repeat(var(--columns), minmax(80px, 1fr));
-							max-width: 100%;
-							overflow-x: scroll;
-						}
-					</code></pre>
-				</section>
-				<section data-auto-animate>
-					<h3  data-id="heading-animation1">Sticky first or last column</h3>
 					<pre data-id="code-animation1"><code data-trim data-line-numbers="9-17" style="max-height: 500px">
 						.grid {
 							display: grid;
@@ -215,8 +203,10 @@
 					<h3  data-id="heading-animation1">Sticky first or last column</h3>
 					<pre data-id="code-animation1"><code data-trim data-line-numbers="1-4" data-ln-start-from="9" style="max-height: 500px">
 						/* display: contents has only partial support in most of the modern browsers */
-						.contents {
-							display: contents;
+						@supports not (grid-template-columns: subgrid) {
+							.contents {
+								display: contents;
+							}
 						}
 
 						.fixed-first, .contents div:first-child {
@@ -240,11 +230,13 @@
 				<section>
 				<h3>More sticky columns</h3>
 					HTML
-					<pre><code data-trim data-line-numbers="1, 10-12" style="max-height: 500px" class="language-html">
+					<pre><code data-trim data-line-numbers="1-4" style="max-height: 500px" class="language-html">
 						<div
 						style="--cols-width: 5em; --columns: 21;"
 						class="grid">
 							<div class="fixed-first">Name</div>
+							<div class="fixed-first" style="--first: 1">1st sticky</div>
+							<div class="fixed-first" style="--first: 2">2nd sticky</div>
 							<div>01.03</div>
 							<div>02.03</div>
 							<div>03.03</div>
@@ -252,29 +244,46 @@
 							<div>05.03</div>
 							<div>06.03</div>
 							<div>07.03</div>...
-							<div class="fixed-last" style="--last: 2">1st sticky</div>
-							<div class="fixed-last" style="--last: 1">2nd sticky</div>
-							<div class="fixed-last">3rd sticky</div>
+							<div class="fixed-last">sticky</div>
 						</div>
 					</code></pre>
 					<aside class="notes">
-						<p>So I needed to make 3 sticky columns at the end of the row. Let's add some more CSS custom properties.</p>
+						<p>So I needed to make 3 sticky columns at the begining of the row. Let's add some more CSS custom properties.</p>
 					</aside>
 				</section>
 				<section class="part2">
-					<section>
 						<h3>More sticky columns</h3>
 						CSS
-						<pre><code data-trim data-line-numbers style="max-height: 500px" class="css language-css">
-							.fixed-last {
+						<pre><code data-trim data-line-numbers="3" style="max-height: 500px" class="css language-css">
+							.fixed-first {
 								position: sticky;
-								right: calc(var(--last, 0) * var(--cols-width));
+								left: calc(var(--first, 0) * var(--cols-width));
 								width: var(--cols-width);
 							}
 						</code></pre>
-						<include src="html/table-3-last-columns.html"/>
-						<aside class="notes">Now, when we have column width and the specific column number, it's quite easy to calculate the position of each fixed cell. While you could go for tables with rows or subgrids emulating rows, using nth selectors instead of classes is still a possibility. But classes and custom properties provide more elegant solution from my point of view.</aside>
+						<include src="html/table-3-first-columns-start.html"/>
+						<aside class="notes">Now, when we have column width and the specific column number, it's quite easy to <strong>calculate the position of each fixed cell</strong>. While you could go for tables with rows or subgrids emulating rows, using nth selectors instead of classes is still a possibility. But classes and custom properties provide more elegant solution from my point of view.</aside>
+				</section>
+				<section>
+					<section>
+					HTML
+					<pre><code data-trim  class="language-html">
+							<div class="fixed-last" style="--last: 2">1st sticky</div>
+							<div class="fixed-last" style="--last: 1">2nd sticky</div>
+							<div class="fixed-last">3rd sticky</div>
+					</code></pre>
+					CSS
+					<pre><code data-trim data-line-numbers="3" class="css language-css">
+						.fixed-last {
+							position: sticky;
+							right: calc(var(--first, 0) * var(--cols-width));
+							background-color: aliceblue;
+						}
+					</code></pre>
+					<include src="html/table-3-last-columns.html"/>
+					<aside class="notes">The most fun part waiting for us when we want to make one sticky column wider then the rest.  As an example, I'll make the three left columns sticky, with the first one being longer.  Let's start on what we've already set up for the columns on the opposite side.</aside>
 					</section>
+
 					<section>
 						TODO: Lea Verou photo
 						HTML
@@ -294,26 +303,6 @@
 					</section>
 				</section>
 				<section>
-					HTML
-					<pre><code data-trim data-line-numbers style="max-height: 500px" class="language-html">
-						<div style="--cols-width: 3em;--columns: 21;" class="grid">
-							<div class="fixed-first">Name</div>
-							<div class="fixed-first" style="--first: 1;">01.03</div>
-							<div class="fixed-first" style="--first: 2;">02.03</div>...
-						</div>
-					</code></pre>
-					CSS
-					<pre><code data-trim class="css language-css">
-						.fixed-first {
-							position: sticky;
-							left: calc(var(--first, 0) * var(--cols-width));
-							background-color: aliceblue;
-						}
-					</code></pre>
-					<include src="html/table-3-first-columns.html"/>
-					<aside class="notes">The most fun part waiting for us when we want to make one sticky column wider then the rest.  As an example, I'll make the three left columns sticky, with the first one being longer.  Let's start on what we've already set up for the columns on the opposite side.</aside>
-				</section>
-				<section>
 					<h3>Different width for the first column</h3>
 					<code>--first-col: 5em;</code>
 					<ul>
@@ -324,6 +313,7 @@
 					</ul>
 					<aside class="notes">
 						Now let's add new css custom property --first-col: 5em; and solve positioning.
+						The first column should have position left equal zero.
 					</aside>
 				</section>
 				<section>

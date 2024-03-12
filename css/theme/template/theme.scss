@@ -333,9 +333,16 @@
 /*********************************************
 * sticky columns
 *********************************************/
-.reveal h3 {
+.reveal h3,
+.reveal h1 {
 	text-transform: none;
 }
+
+.reveal h1 small, .reveal h1 span {
+	display: block;
+	font-size: 0.7em;
+}
+
 .grid {
 	--r-main-font-size: 25px;
     --border-color: #000;
@@ -376,8 +383,10 @@
 }
 
 code:not([data-trim]) {
-	display: ineline-block;
-	background-color: black;
+	display: inline-block;
+	background-color: #777;
 	color: white;
+	border-radius: 0.2em;
+	padding-inline: 0.2em;
 
 }
