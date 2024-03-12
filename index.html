@@ -105,7 +105,7 @@
 					<aside class="notes"><p>So let's start with a  basic layout.  First up, I don't know how many columns will be in the table, so let's handle that with CSS custom properties.</p></aside>
 				</section>
 				<section>CSS
-					<pre><code data-trim>
+					<pre><code data-trim class="css language-css">
 						.grid {
 							display: grid;
 							grid-template-columns: repeat(var(--columns), minmax(80px, 1fr));
@@ -114,7 +114,7 @@
 						}
 					</code></pre>
 					HTML
-					<pre><code data-trim>
+					<pre><code data-trim class="language-html">
 						<section class="grid" style="--columns: 21;">
 							<div>Name</div>
 							<div>01.03</div>
@@ -240,7 +240,7 @@
 				<section>
 				<h3>More sticky columns</h3>
 					HTML
-					<pre><code data-trim data-line-numbers="1, 10-12" style="max-height: 500px">
+					<pre><code data-trim data-line-numbers="1, 10-12" style="max-height: 500px" class="language-html">
 						<div
 						style="--cols-width: 5em; --columns: 21;"
 						class="grid">
@@ -265,7 +265,7 @@
 					<section>
 						<h3>More sticky columns</h3>
 						CSS
-						<pre><code data-trim data-line-numbers style="max-height: 500px">
+						<pre><code data-trim data-line-numbers style="max-height: 500px" class="css language-css">
 							.fixed-last {
 								position: sticky;
 								right: calc(var(--last, 0) * var(--cols-width));
@@ -278,11 +278,11 @@
 					<section>
 						TODO: Lea Verou photo
 						HTML
-						<pre><code>
+						<pre><code class="language-html"  data-trim>
 							<div style="--p:100"></div>
 						</code></pre>
 						CSS
-						<pre><code>
+						<pre><code data-trim class="css language-css">
 							div::after {
 								counter-reset: p var(--p);
 								content: counter(p);
@@ -295,7 +295,7 @@
 				</section>
 				<section>
 					HTML
-					<pre><code data-trim data-line-numbers style="max-height: 500px">
+					<pre><code data-trim data-line-numbers style="max-height: 500px" class="language-html">
 						<div style="--cols-width: 3em;--columns: 21;" class="grid">
 							<div class="fixed-first">Name</div>
 							<div class="fixed-first" style="--first: 1;">01.03</div>
@@ -303,7 +303,7 @@
 						</div>
 					</code></pre>
 					CSS
-					<pre><code data-trim>
+					<pre><code data-trim class="css language-css">
 						.fixed-first {
 							position: sticky;
 							left: calc(var(--first, 0) * var(--cols-width));
@@ -339,7 +339,9 @@
 				<section>
 					<section>
 						<h3>Make a boolean out of a variable</h3>
-						<pre><code data-trim class="css">--_is-not-first: calc(var(--first) / max(1, var(--first)));</code></pre>
+						<pre><code data-trim class="css language-css">
+							--_is-not-first: calc(var(--first) / max(1, var(--first)));
+						</code></pre>
 						<aside class="notes">Here' we're dividing the variable by itself, but if it's equal zero we're dividing it on 1.</aside>
 					</section>
 					<section>
@@ -351,7 +353,7 @@
 				</section>
 				<section>
 					Let's add it to the code
-					<pre><code data-trim class="css">
+					<pre><code data-trim class="css language-css">
 						.grid {
 							--first: 0;
 							grid-template-columns:
@@ -374,7 +376,7 @@
 				</section>
 				<section>
 					<h3>Striped rows</h3>
-					<pre><code>
+					<pre><code data-trim  class="css language-css">
 						.grid-striped {
 							background-image: linear-gradient(180deg, transparent 0, transparent var(--cell-height), grey var(--cell-height), grey calc(var(--cell-height)*2));
 							background-size: 100% calc(var(--cell-height)*2);
@@ -387,7 +389,7 @@
 				<section>
 					<section>
 						<h3>Hover on rows</h3>
-						<pre><code>
+						<pre><code data-trim class="css language-css">
 							.tr:hover, .subgrid:hover {
 								background-color: grey;
 							}
@@ -396,7 +398,7 @@
 					</section>
 					<section>
 						<h3>Hover on a row - highlight the first cell</h3>
-						<pre><code>
+						<pre><code data-trim class="css language-css">
 							// Uses .fixed-last as a separator at the end of the table row.
 							// In plain words:
 							// 1. select .fixed-first followed by div:hover
