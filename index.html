@@ -36,7 +36,7 @@
 				</section>
 
 				<section>
-					<h2>1. Basic layout</h2>
+					<h2>Part I. Basic layout</h2>
 					<div class="grid">
 						<div></div>
 						<div>01.03</div>
@@ -276,7 +276,21 @@
 						<aside class="notes">Now, when we have column width and the specific column number, it's quite easy to calculate the position of each fixed cell. While you could go for tables with rows or subgrids emulating rows, using nth selectors instead of classes is still a possibility. But classes and custom properties provide more elegant solution from my point of view.</aside>
 					</section>
 					<section>
-						TODO: how to debug custom properties.
+						TODO: Lea Verou photo
+						HTML
+						<pre><code>
+							<div style="--p:100"></div>
+						</code></pre>
+						CSS
+						<pre><code>
+							div::after {
+								counter-reset: p var(--p);
+								content: counter(p);
+							}
+						</code></pre>
+						<aside class="notes">
+							By the way, there's an interesting method for displaying (or debugging) CSS custom properties, invented by Lea Verou. It involves using a counter to showcase it as the content of a pseudo-element. Unfortunately, it only works with integers.
+						</aside>
 					</section>
 				</section>
 				<section>
@@ -355,21 +369,65 @@
 					TODO: finished table example
 				</section>
 				<section>
-					<h2>Part III. Improvements</h2>
+					<h2>Part IV. Improvements</h2>
 					TODO: add even funnier picture
 				</section>
 				<section>
 					<h3>Striped rows</h3>
-					TODO
+					<pre><code>
+						.grid-striped {
+							background-image: linear-gradient(180deg, transparent 0, transparent var(--cell-height), grey var(--cell-height), grey calc(var(--cell-height)*2));
+							background-size: 100% calc(var(--cell-height)*2);
+						}
+					</code></pre>
+					<aside class="notes">
+						As it's a wide table, improving its readability and adding stripes is essential. While it's easy with rows (or mimicking them), for a clean grid, you can employ a trick using a linear-gradient background. However, in this case, you'll need to define the cells' height.
+					</aside>
 				</section>
 				<section>
 					<section>
-					<h3>Hover on rows</h3>
-					TODO</section>
-					<section>TODO: add Kout's css</section>
+						<h3>Hover on rows</h3>
+						<pre><code>
+							.tr:hover, .subgrid:hover {
+								background-color: grey;
+							}
+						</code></pre>
+						<aside class="notes">Again - it's easy to make hover effect on rows if you have it, but how to make it without rows?</aside>
+					</section>
+					<section>
+						<h3>Hover on a row - highlight the first cell</h3>
+						<pre><code>
+							// Uses .fixed-last as a separator at the end of the table row.
+							// In plain words:
+							// 1. select .fixed-first followed by div:hover
+							// 2. but only if not followed by .fixed-last (at the end of a row) followed by div:hover
+							.fixed-first:has(~ div:hover):not(:has(~ .fixed-last ~  div:hover)) {
+								background-color: grey;
+							}
+						</code>
+						</pre>
+						<aside class="notes">For this case Tomas Kout invented this tricky selector that highlights the first cell in a row.</aside>
+					</section>
 				</section>
-				<section><h3>Semantics</h3>
-				TODO</section>
+				<section>
+					<h3>Semantics</h3>
+					ARIA roles for tables:
+					<ul>
+						<li><code>table</code> - the top-level container role</li>
+						<li><code>row</code> - groups cells into rows, equivalent to the <code>tr</code> element</li>
+						<li><code>columnheader</code></li>
+						<li><code>rowheader</code></li>
+						<li><code>cell</code> - equivalent to the <code>td</code> element</li>
+					</ul>
+
+					<aside class="notes">So, circling back to our initial question - grid or table? You can certainly go with a grid, but bear in mind that you'll need to explicitly declare table semantics with ARIA for them to be recognized by screen readers. It's a substantial topic, not covered in today's presentation, but I wanted to bring it to your attention.</aside>
+				</section>
+				<section>
+					<h2>The end</h2>
+					<aside class="notes">
+						As we wrap up our talk on sticky columns and CSS magic, my hope is that you now feel more comfortable with grids and tables. Just remember, it's not just about the layout; it's about telling a story with your code and creating an awesome user experience. Happy coding!
+					</aside>
+				</section>
 			</div>
 		</div>
 
