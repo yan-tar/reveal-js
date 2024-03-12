@@ -388,5 +388,33 @@ code:not([data-trim]) {
 	color: white;
 	border-radius: 0.2em;
 	padding-inline: 0.2em;
+}
 
+.small {
+	font-size: 0.8em;
+}
+
+
+.d-flex {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 2em;
+}
+
+.d-block {display: block; }
+.text-left {text-align: left;}
+
+.show-vars {
+
+	.fixed-start,
+	.fixed-end {
+		&::after {
+			counter-reset: col var(--col);
+			content: "--col:" counter(col);
+			display: block;
+			font-size: 0.7em;
+		}
+
+	}
 }

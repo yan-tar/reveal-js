@@ -20,7 +20,10 @@
 					<h1><span>Navigating</span> Sticky&nbsp;Columns <small>and</small> Custom&nbsp;Properties</h1>
 					<p><a href="https://stickycolumns.netlify.app/">https://stickycolumns.netlify.app/</a></p>
 					<aside class="notes">
-						<p>As many of you know, responsive tables can be a big pain, especially on mobiles. But sometimes, even on big screens, tables can become a problem. Sticky columns can be the solution you're trying to find.</p>
+						<ul>
+							<li>As many of you know, responsive tables can be a big pain on mobiles</li>
+							<li>sometimes, problem even on big screens</li>
+							<li>sticky columns can be the solution</li></ul>
 					</aside>
 				</section>
 				<section>
@@ -28,10 +31,14 @@
 					<div class="fragment">TODO: add example of the Chromium bug</div>
 
 					<aside class="notes">
-						<p>So, when I get a new task to make a layout with sticky columns, I have two ways in front of me: make it semantic and accessible, and robust with tables, or try something new and maybe more flexible with CSS grid.</p>
-						<p>Some years ago, I already had some not-so-happy experiences with tables. So, this time, I decided to give CSS grid a shot. Plus, I knew we needed this component for internal use, specifically within our admin section, so semantics and accessibility aren't as crucial.</p>
-						<p>Another reason to opt for CSS grid is a pesky Chromium bug messing with borders on tables with sticky columns.</p>
-						<p>But the CSS I'll use in my examples plays nice with tables as well.</p>
+						<ul><li>two ways in front of me</li>
+							<li>make it semantic and accessible, and robust with tables</li>
+							<li>CSS grid</li>
+
+							<li>not-so-happy experiences with tables</li>
+							<li>ok for internal use &ndash; semantics and accessibility aren't as crucial.</li>
+							<li>Chromium bug</li>
+						<li>CSS should work for tables</li></ul>
 					</aside>
 
 				</section>
@@ -103,10 +110,15 @@
 						<div></div>
 						<div></div>
 					</div>
-					<aside class="notes"><p>So let's start with a  basic layout.  First up, I don't know how many columns will be in the table, so let's handle that with CSS custom properties.</p></aside>
+					<aside class="notes">
+						<ul>
+							<li>explain the task</li>
+							<li>start with basic layout</li>
+							<li>define columns with CSS custom property</li>
+						</ul>
 				</section>
 				<section>CSS
-					<pre><code data-trim class="css language-css">
+					<pre><code data-trim data-line-numbers="1-3" class="css language-css small">
 						.grid {
 							display: grid;
 							grid-template-columns: repeat(var(--columns), minmax(80px, 1fr));
@@ -115,7 +127,7 @@
 						}
 					</code></pre>
 					HTML
-					<pre><code data-trim class="language-html">
+					<pre><code data-line-numbers="1" data-trim class="language-html small">
 						<section class="grid" style="--columns: 21;">
 							<div>Name</div>
 							<div>01.03</div>
@@ -125,9 +137,7 @@
 							<div>05.03</div>
 							<div>06.03</div>
 							<div>07.03</div>
-							<div>08.03</div>
-							<div>09.03</div>
-							<div>10.03</div>...
+							<div>08.03</div>...
 							<!-- HERE starts the new row -->
 							<div>John Doe</div>
 							<div></div>...
@@ -139,7 +149,7 @@
 					<h2>Part II. Add some stickyness</h2>
 					<p>TODO: find some bubble gum image</p>
 					<aside class="notes">
-						<p>If you only need to make the first or last column sticky, that's a straightforward task.</p>
+						<p>make the first or last column sticky is a straightforward task</p>
 					</aside>
 				</section>
 				<section data-auto-animate>
@@ -163,7 +173,10 @@
 							right: 0;
 						}
 					</code></pre>
-					<aside class="notes">If you're using grid, you'll need some classes to flag the sticky cells.  With tables, nth selectors got your covered.</aside>
+					<aside class="notes"><ul>
+						<li>for grid cells use classes</li>
+						<li>nth selectors for tables</li>
+					</ul></aside>
 				</section>
 				<section data-auto-animate>
 					<h3  data-id="heading-animation1">Sticky first or last column</h3>
@@ -181,7 +194,7 @@
 							left: 0;
 						}
 					</code></pre>
-					<aside class="notes">To mimic rows within a grid, you can go for subgrid or throw in a wrapper with 'display: contents'. Just a heads up, though – these options aren't fully supported in modern browsers.</aside>
+					<aside class="notes">mimic rows within a grid with subgrid</aside>
 				</section>
 
 				<section data-auto-animate>
@@ -205,12 +218,12 @@
 					<pre data-id="code-animation1"><code data-trim data-line-numbers="1-4" data-ln-start-from="9" style="max-height: 500px">
 						/* display: contents has only partial support in most of the modern browsers */
 						@supports not (grid-template-columns: subgrid) {
-							.contents {
+							.subgrid {
 								display: contents;
 							}
 						}
 
-						.fixed-start, .contents div:first-child {
+						.fixed-start, .subgrid div:first-child {
 							position: sticky;
 							left: 0;
 						}
@@ -228,7 +241,7 @@
 					<h2>Part III. Add more stickiness</h2>
 					<p>TODO: another image</p>
 					<aside class="notes">
-						<p>What if we need to stick more then one column on the side? Unfortunately it's the point where we need to define columns width.</p>
+						<p>more then one column on the side &ndash; let's define columns width.</p>
 					</aside>
 				</section>
 				<section>
@@ -252,7 +265,7 @@
 						</div>
 					</code></pre>
 					<aside class="notes">
-						<p>So I needed to make 3 sticky columns at the begining of the row. Let's add some more CSS custom properties.</p>
+						<p>3 sticky columns at the start of the row = more css variables</p>
 					</aside>
 				</section>
 				<section class="part2">
@@ -266,7 +279,7 @@
 							}
 						</code></pre>
 						<include src="html/table-3-first-columns-start.html"/>
-						<aside class="notes">Now, when we have column width and the specific column number, it's quite easy to <strong>calculate the position of each fixed cell</strong>. While you could go for tables with rows or subgrids emulating rows, using nth selectors instead of classes is still a possibility. But classes and custom properties provide more elegant solution from my point of view.</aside>
+						<aside class="notes">To calculate the left positioning we're multiplying number of the column (starting from zero) to column's width we defined earlier</aside>
 				</section>
 				<section>
 					<section>
@@ -285,11 +298,11 @@
 						}
 					</code></pre>
 					<include src="html/table-3-last-columns.html"/>
-					<aside class="notes">The most fun part waiting for us when we want to make one sticky column wider then the rest.  As an example, I'll make the three left columns sticky, with the first one being longer.  Let's start on what we've already set up for the columns on the opposite side.</aside>
+					<aside>Same logic for the end of the row, but columns numeration should be in opposite direction</aside>
 					</section>
 
 					<section>
-						TODO: Lea Verou photo
+						<div class="d-flex block-center"><img src="/img/Lea-verou.jpg" alt="Lea Verou"> <span>Lea Verou <a href="https://www.youtube.com/watch?v=ZuZizqDF4q8" class="d-block">CSS Variable Secrets</a></span></div>
 						HTML
 						<pre><code class="language-html"  data-trim>
 							<div style="--p:100"></div>
@@ -302,48 +315,42 @@
 							}
 						</code></pre>
 						<aside class="notes">
-							By the way, there's an interesting method for displaying (or debugging) CSS custom properties, invented by Lea Verou. It involves using a counter to showcase it as the content of a pseudo-element. Unfortunately, it only works with integers.
+							By the way, there's an interesting method for displaying (or debugging) CSS custom properties, invented by Lea Verou. It involves using a counter to showcase it as the content of a pseudo-element. It only works with integers, but there is workarounds for floating numbers.
 						</aside>
 					</section>
 				</section>
 				<section>
 					<h3>Different width for the first column</h3>
-					<code>--first-col-width: 5em;</code> <code>--col-width: 3em;</code>
+					<code class="small">--first-col-width: 5em;</code> <code class="small">--col-width: 3em;</code>
 					<ul>
 						<li class="fragment">--col: 0 <code>{ left: 0; }</code></li>
 						<li class="fragment">--col: 1 <code>{ left: 0 + 5em; }</code></li>
 						<li class="fragment">--col: 2 <code>{ left: 0 + 5em + 3em }</code></li>
 						<li class="fragment">--col: 3 <code>{ left: 0 + 5em + 3em * 2 }</code></li>
 					</ul>
-					<aside class="notes">
-						Now let's add new css custom property --first-col-width: 5em; and solve positioning.
-						<strong>The first column should have position left equal zero.</strong>
+					<p class="fragment">But how to put it to calc()?</p>
+
+					<aside class="notes"><p>What if we need the first sticky column wider then others?</p>
+						<p>New css custom property --first-col-width: 5em; and solve positioning.</p>
+						<p><strong>The first column should have position left equal zero.</strong></p>
 					</aside>
 				</section>
 				<section>
 					<h3>Difference in formula for the first and next columns</h3>
-					<ul>
-						<li><code>5em * 0 + ((var(--col) - 0) * 3em)</code> // 0</li>
-						<li class="fragment"><code>5em * 1 + ((var(--col) - 1) * 3em)</code> // 1</li>
-					</ul>
+					<p class="small text-left"><code>5em * 0 + ((var(--col) - 0) * 3em)</code> // 0</p>
+					<p class="small text-left"><code>5em * 1 + ((var(--col) - 1) * 3em)</code> // 5em | 8em | 11em</p>
 					<aside class="notes">
-						We can tweak it using this formula. So basically we need something like boolean variable. It would be cool if css custom property supported a boolean type, but until that happens, let's experiment with this formula.
+						I came to this formula. So basically we need something like boolean variable. It would be cool if css custom property supported a boolean type, but until that happens, let's experiment with this formula.
 					</aside>
 				</section>
 				<section>
-					<section>
 						<h3>Make a boolean out of a variable</h3>
 						<pre><code data-trim class="css language-css">
 							--_is-not-first: calc(var(--col) / max(1, var(--col)));
 						</code></pre>
-						<aside class="notes">Here' we're dividing the variable by itself, but if it's equal zero we're dividing it on 1.</aside>
-					</section>
-					<section>
-						<h3>Pseudo private variables</h3>
-						<code>--_var</code>
-						<p>TODO: add a picture.</p>
-						<aside class="notes">BTW I'm using here underscore notation to introduce a "private" css property - as Lea Verou proposed in her CSS variable secrets video.</aside>
-					</section>
+						<p class="fragment small"><code>--_var</code> &ndash; "private" variable (Lea Verou proposal)</p>
+						<aside class="notes">Here' we're dividing the variable by itself, but if it's equal zero we're dividing it on 1. </aside>
+
 				</section>
 				<section>
 					Let's add it to the code
@@ -392,7 +399,7 @@
 					</section>
 					<section>
 						<h3>Hover on a row &ndash; highlight the first cell</h3>
-						<pre><code data-line-numbers="5" data-trim class="css language-css">
+						<pre><code data-line-numbers="5" data-trim class="css language-css fit-text">
 							// Uses .fixed-end as a separator at the end of the table row.
 							// In plain words:
 							// 1. select .fixed-start followed by div:hover
@@ -402,6 +409,7 @@
 							}
 						</code>
 						</pre>
+						<p><small>Code by Tomaš Kout</small></p>
 						<aside class="notes">For this case Tomas Kout invented this tricky selector that highlights the first cell in a row.</aside>
 					</section>
 				</section>
