@@ -374,3 +374,10 @@
 		width: var(--cols-width);
 	}
 }
+
+code:not([data-trim]) {
+	display: ineline-block;
+	background-color: black;
+	color: white;
+
+}
