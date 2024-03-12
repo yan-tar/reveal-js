@@ -356,13 +356,13 @@
 		background-color: var(--r-background-color);
     }
 
-	.fixed-first {
+	.fixed-start {
 		position: sticky;
 		left: 0;
 		background-color: aliceblue;
 	}
 
-	.fixed-last {
+	.fixed-end {
 		position: sticky;
 		right: 0;
 		background-color: aliceblue;
@@ -371,13 +371,13 @@
 
 .part2,
 .part2 ~ section {
-	.fixed-last {
-		right: calc(var(--last, 0) * var(--cols-width));
+	.fixed-end {
+		right: calc(var(--col, 0) * var(--cols-width));
 		width: var(--cols-width);
 	}
 
-	.fixed-first {
-		left: calc(var(--first, 0) * var(--cols-width));
+	.fixed-start {
+		left: calc(var(--col, 0) * var(--cols-width));
 		width: var(--cols-width);
 	}
 }
