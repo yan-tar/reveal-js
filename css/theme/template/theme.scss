@@ -371,14 +371,16 @@
 
 .part2,
 .part2 ~ section {
+	.grid {
+		grid-template-columns: repeat(var(--columns), var(--cols-width));
+	}
+
 	.fixed-end {
 		right: calc(var(--col, 0) * var(--cols-width));
-		width: var(--cols-width);
 	}
 
 	.fixed-start {
 		left: calc(var(--col, 0) * var(--cols-width));
-		width: var(--cols-width);
 	}
 }
 
@@ -417,4 +419,17 @@ code:not([data-trim]) {
 		}
 
 	}
+}
+
+.reveal .final {
+	.grid {
+		--col: 0;
+		grid-template-columns: var(--first-col-width) repeat(calc(var(--columns) - 1), var(--cols-width));
+
+		.fixed-start {
+			--_is-not-first: calc(var(--col) / max(1, var(--col)));
+			left: calc(var(--first-col-width) * var(--_is-not-first) + (var(--col) - var(--_is-not-first)) * var(--cols-width));
+		}
+	}
+
 }
