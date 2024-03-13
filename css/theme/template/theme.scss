@@ -434,6 +434,10 @@ code:not([data-trim]) {
 
 }
 
+.table-grid-wrapper {
+	max-width: 100%;
+	overflow-x: scroll;
+}
 
 .table-grid {
 	border-collapse: collapse;
