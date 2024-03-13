@@ -356,13 +356,13 @@
 		background-color: var(--r-background-color);
     }
 
-	.fixed-start {
+	.fixed-start, td:first-child, th:first-child {
 		position: sticky;
 		left: 0;
 		background-color: aliceblue;
 	}
 
-	.fixed-end {
+	.fixed-end, td:last-child, th:last-child {
 		position: sticky;
 		right: 0;
 		background-color: aliceblue;
@@ -432,4 +432,18 @@ code:not([data-trim]) {
 		}
 	}
 
+}
+
+
+.table-grid {
+	border-collapse: collapse;
+	max-width: 100%;
+	overflow-x: scroll;
+	position: relative;
+	display: table;
+}
+
+.table-grid td, th {
+	border: 1px solid black;
+	min-width: var(--cols-width);
 }
